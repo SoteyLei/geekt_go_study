@@ -13,12 +13,13 @@ func wrapSqlErro(conn *sql.DB) (string, error) {
 	err1 := conn.QueryRow("select userName from user where userName = ?", "abcd").Scan(&username, &password)
 	if err1 != nil {
 		if err1 == sql.ErrNoRows {
-			return nil, errors.Wrap(err1, "not found")
+			return "", errors.Wrap(err1, "not found")
 		} else {
 			log.Fatal(err1)
 		}
 	}
 	fmt.Println(username)
+	return username, nil
 }
 
 func main() {
